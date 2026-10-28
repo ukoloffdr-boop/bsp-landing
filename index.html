@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>БСП-пром: возможности для бизнеса — прототип</title>
+<style>
+:root{--deep:#0c467b;--mid:#196a9d;--light:#5b8eb2;--pale:#e8f1f8;--ink:#14243a;--muted:#5a6b80;--r:14px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:"Inter","Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);line-height:1.55;background:#fff}
+a{color:var(--mid)}img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+section{padding:80px 0}h2{font-size:clamp(26px,3.4vw,38px);line-height:1.2;margin:0 0 16px;color:var(--deep)}
+.lead{font-size:18px;color:var(--muted);max-width:760px}
+.btn{display:inline-block;padding:13px 24px;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--deep);cursor:pointer;font-size:15px;font-family:inherit}
+.btn-p{background:var(--deep);color:#fff}.btn-p:hover{background:var(--mid);border-color:var(--mid)}
+.btn-o{background:#fff;color:var(--deep)}.btn-o:hover{background:var(--pale)}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid #e3eaf1}
+.hd{display:flex;align-items:center;gap:18px;padding:10px 20px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--deep);min-width:0}
+.brand img{height:48px;width:auto}.brand span{font-size:12.5px;font-weight:600;line-height:1.25;max-width:230px}
+nav{display:flex;gap:22px;margin-left:auto}nav a{text-decoration:none;color:var(--ink);font-weight:500;font-size:15px}nav a:hover{color:var(--mid)}
+.hd .btn{padding:10px 18px;font-size:14px}
+.burger{display:none;margin-left:auto;background:none;border:0;font-size:26px;color:var(--deep);cursor:pointer}
+.hero{padding:70px 0;background:linear-gradient(180deg,#fff,var(--pale))}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(34px,5vw,58px);line-height:1.08;margin:0 0 20px;color:var(--deep);letter-spacing:-.5px}
+.hero h1 b{color:var(--mid)}
+.trust{margin:22px 0 28px;padding-left:14px;border-left:4px solid var(--light);color:var(--ink);font-weight:500}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.photo-ph{aspect-ratio:4/3;border-radius:22px;position:relative;overflow:hidden;
+background:repeating-linear-gradient(135deg,rgba(255,255,255,.07) 0 14px,transparent 14px 28px),linear-gradient(135deg,var(--deep),var(--mid) 55%,var(--light));
+display:flex;align-items:flex-end;padding:22px;color:#fff;box-shadow:0 20px 50px rgba(12,70,123,.25)}
+.photo-ph:before{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;border:40px solid rgba(255,255,255,.12)}
+.photo-ph small{background:rgba(0,0,0,.3);padding:8px 12px;border-radius:8px;font-size:13px}
+.why{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.dir{list-style:none;padding:0;margin:0;counter-reset:d}
+.dir li{counter-increment:d;display:flex;gap:16px;padding:16px 0;border-bottom:1px solid #e3eaf1;font-weight:500}
+.dir li:before{content:counter(d,decimal-leading-zero);color:var(--light);font-weight:700;font-size:20px;min-width:32px}
+.alt{background:var(--pale)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.card{background:#fff;border:1px solid #dde7f0;border-radius:var(--r);padding:26px;transition:.2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(12,70,123,.1)}
+.card h3{margin:14px 0 8px;font-size:19px;color:var(--deep)}.card p{margin:0;color:var(--muted)}
+.ic{width:52px;height:52px;border-radius:12px;background:var(--pale);display:grid;place-items:center}
+.ic svg{width:28px;height:28px;stroke:var(--deep);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ai{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:center}
+.chat{border-radius:18px;overflow:hidden;box-shadow:0 20px 50px rgba(12,70,123,.18);background:#fff;border:1px solid #dde7f0}
+.chat-h{background:var(--deep);color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;font-weight:600}
+.demo{background:#ffd76a;color:#3a2c00;font-size:11px;padding:3px 8px;border-radius:6px;font-weight:700;letter-spacing:.5px}
+.log{height:300px;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:10px;background:#f7fafd}
+.msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:14.5px}
+.bot{background:#fff;border:1px solid #dde7f0;align-self:flex-start}.me{background:var(--mid);color:#fff;align-self:flex-end}
+.qs{padding:14px;display:flex;flex-wrap:wrap;gap:8px;border-top:1px solid #e3eaf1}
+.qs button{border:1px solid var(--light);background:#fff;color:var(--deep);border-radius:999px;padding:7px 12px;font-size:13px;cursor:pointer;font-family:inherit}
+.qs button:hover{background:var(--pale)}
+.disc{font-size:12.5px;color:var(--muted);padding:0 14px 14px}
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.case{display:flex;flex-direction:column;border-radius:var(--r);border:1px solid #dde7f0;padding:24px;background:#fff}
+.case .tag{font-size:12px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.6px}
+.case h3{font-size:18px;margin:8px 0;color:var(--deep)}.case p{color:var(--muted);margin:0 0 16px;flex:1}
+.case a{font-weight:600;text-decoration:none}
+.about{display:grid;grid-template-columns:340px 1fr;gap:56px;align-items:center}
+.about figure{margin:0}.about img{border-radius:18px;box-shadow:0 16px 40px rgba(12,70,123,.2)}
+.about figcaption{margin-top:12px;font-size:14px;color:var(--muted);text-align:center}
+.checks{list-style:none;padding:0}.checks li{padding:8px 0 8px 30px;position:relative;font-weight:500}
+.checks li:before{content:"✓";position:absolute;left:0;color:#fff;background:var(--mid);width:20px;height:20px;border-radius:50%;font-size:12px;display:grid;place-items:center;top:10px}
+.formbox{background:linear-gradient(135deg,var(--deep),var(--mid));color:#fff;border-radius:22px;padding:48px;display:grid;grid-template-columns:.9fr 1.1fr;gap:40px}
+.formbox h2{color:#fff}.formbox .lead{color:#d6e6f3}
+form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{font-size:13px;font-weight:600;display:flex;flex-direction:column;gap:6px}
+input,select,textarea{font:inherit;padding:12px 14px;border-radius:10px;border:0;color:var(--ink)}
+.full{grid-column:1/-1}.cons{flex-direction:row;align-items:flex-start;gap:10px;font-weight:400}.cons input{margin-top:3px}
+.cons a{color:#fff}form .btn{background:#fff;color:var(--deep);border-color:#fff}
+.thanks{display:none;background:rgba(255,255,255,.12);padding:28px;border-radius:14px}
+footer{background:#0a2c4e;color:#c8d8e8;padding:56px 0 30px;font-size:15px}
+.ft{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:36px}footer a{color:#fff}footer h4{color:#fff;margin:0 0 12px}
+.ph{background:#ffd76a;color:#3a2c00;padding:1px 6px;border-radius:4px;font-size:12px}
+.copy{border-top:1px solid #23466b;margin-top:36px;padding-top:20px;font-size:13px}
+.proto{background:#ffd76a;color:#3a2c00;text-align:center;font-size:13px;padding:6px}
+@media(max-width:960px){nav,.hd .btn{display:none}.burger{display:block}
+nav.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:#fff;padding:16px 20px;border-bottom:1px solid #e3eaf1}
+.hero .wrap,.why,.ai,.about,.formbox,.ft{grid-template-columns:1fr}.cards,.cases{grid-template-columns:1fr 1fr}
+.about figure{max-width:300px}}
+@media(max-width:620px){section{padding:56px 0}.cards,.cases,form{grid-template-columns:1fr}.formbox{padding:28px 20px}.brand span{font-size:11px;max-width:170px}.brand img{height:40px}}
+</style>
+</head>
+<body>
+<div class="proto">Прототип для согласования. Тексты, фото и контакты требуют подтверждения дирекцией.</div>
+<header><div class="hd">
+<a class="brand" href="#top"><img src="logo.png" alt="Логотип БСП-пром"><span>Республиканская ассоциация бизнеса и нанимателей «БСП-пром»</span></a>
+<nav id="nav"><a href="#vozm">Возможности</a><a href="#ai">Ассистент</a><a href="#practice">Практика</a><a href="#join">Вступление</a><a href="#contacts">Контакты</a></nav>
+<a class="btn btn-p" href="#join">Получить консультацию</a>
+<button class="burger" aria-label="Меню" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
+</div></header>
+
+<section class="hero" id="top"><div class="wrap">
+<div><h1>БСП-пром: <b>возможности для бизнеса</b></h1>
+<p class="lead">Республиканская ассоциация предпринимателей и нанимателей: защита интересов, правовая поддержка, деловые связи и новые возможности для развития.</p>
+<p class="trust">Работаем с бизнесом и представляем его интересы в диалоге с государственными органами.</p>
+<div class="btns"><a class="btn btn-p" href="#vozm">Узнать о возможностях</a><a class="btn btn-o" href="#ai">Задать вопрос ассистенту</a></div></div>
+<div class="photo-ph" role="img" aria-label="Место для фотографии"><small>Место для реального фото: предприятие, деловая встреча или руководители на производстве (без стоковых снимков)</small></div>
+</div></section>
+
+<section><div class="wrap why">
+<div><h2>Почему бизнес вступает в ассоциацию</h2>
+<p class="lead">Предпринимателю приходится одновременно управлять производством, людьми, финансами и рынком — при меняющихся требованиях, сложностях с экспортом и необходимостью защищать интересы компании. БСП-пром объединяет бизнес, чтобы решать такие задачи не поодиночке.</p></div>
+<ol class="dir">
+<li>Представление интересов бизнеса в государственных органах.</li>
+<li>Правовая помощь и разъяснение новых требований.</li>
+<li>Участие в подготовке предложений по законодательству.</li>
+<li>Доступ к деловым связям, партнёрам и кооперационным проектам.</li>
+<li>Навигация по мерам поддержки, кредитам, экспорту и новым рынкам.</li>
+</ol></div></section>
+
+<section class="alt" id="vozm"><div class="wrap">
+<h2>Возможности для члена ассоциации</h2><p class="lead">Помогаем ориентироваться, содействуем и представляем позицию бизнеса.</p>
+<div class="cards">
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Защита интересов</h3><p>Консолидированная позиция бизнеса в диалоге с государственными органами.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 7h14M5 7l-3 7a3 3 0 006 0zM19 7l-3 7a3 3 0 006 0zM8 21h8"/></svg></div><h3>Правовая поддержка</h3><p>Помощь в понимании новых требований, подготовке обращений и поиске решения.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div><h3>Влияние на правила</h3><p>Участие в рабочих группах и подготовке предложений по нормативным актам.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12v1M15 12v1M9 16h6"/></svg></div><h3>AI-ассистент</h3><p>Закрытый цифровой помощник с ответами по материалам и сервисам ассоциации.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div><h3>Экспорт и развитие</h3><p>Ориентация по мерам поддержки, финансированию, документам и выходу на рынки.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="7" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M2 20c0-3 2.5-5 5-5s5 2 5 5M12 20c0-3 2.5-5 5-5s5 2 5 5"/></svg></div><h3>Связи и кооперация</h3><p>Контакты предпринимателей, партнёров, поставщиков и заказчиков.</p></div>
+</div></div></section>
+
+<section id="ai"><div class="wrap ai">
+<div><h2>Вопрос к ассоциации — без ожидания и лишних звонков</h2>
+<p class="lead">Для членов БСП-пром доступен цифровой AI-ассистент. Он помогает быстро найти информацию о возможностях ассоциации, правовой поддержке, изменениях регулирования, мерах господдержки, экспорте и порядке вступления.</p>
+<p class="lead">Если вопрос требует индивидуального разбора, ассистент помогает передать его специалисту ассоциации.</p></div>
+<div class="chat"><div class="chat-h"><span>AI-ассистент БСП-пром</span><span class="demo">ДЕМО</span></div>
+<div class="log" id="log"><div class="msg bot">Здравствуйте! Это демонстрация интерфейса. Выберите вопрос ниже.</div></div>
+<div class="qs" id="qs"></div>
+<p class="disc">Демонстрационные ответы прототипа. В рабочей версии ответы будут опираться только на утверждённую базу знаний ассоциации и не заменяют юридическую консультацию.</p></div>
+</div></section>
+
+<section class="alt" id="practice"><div class="wrap">
+<h2>Практика и результаты</h2><p class="lead">Публикации с официального сайта ассоциации.</p>
+<div class="cases">
+<div class="case"><span class="tag">Октябрь 2026 · Налоги</span><h3>Ответ МНС по электронной цифровой подписи</h3><p>Министерство по налогам и сборам рассмотрело обращение БСП-пром по вопросам использования ЭЦП и в ответе от 16.10.2026 разъяснило применение атрибутных сертификатов для сотрудников аутсорсинговых компаний.</p><a href="https://xn----9sb8ahdbhe.xn--90ais/" target="_blank" rel="noopener">Источник →</a></div>
+<div class="case"><span class="tag">2 октября 2026 · Союзное государство</span><h3>Научно-экспертный совет Союзного государства</h3><p>Председатель ассоциации А.Ф. Калинин, член Научно-экспертного совета, предложил законодательно урегулировать налогообложение компаний, одновременно являющихся резидентами ПВТ, «Великого камня» и СЭЗ.</p><a href="https://xn----9sb8ahdbhe.xn--90ais/" target="_blank" rel="noopener">Источник →</a></div>
+<div class="case"><span class="tag">Март 2025 · Правительство</span><h3>Предложения бизнеса в Правительство</h3><p>БСП-пром провёл совещание директоров промышленных предприятий по текущим проблемным вопросам и предложениям для Правительства.</p><a href="https://www.xn----9sb8ahdbhe.xn--90ais/%D0%9F%D1%80%D0%BE%D0%BC%D1%8B%D1%88%D0%BB%D0%B5%D0%BD%D0%BD%D0%B8%D0%BA%D0%B8-%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D0%BB%D0%B8-%D0%BF%D1%80%D0%B5%D0%B4%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B2-%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D1%82%D0%B2%D0%BE/" target="_blank" rel="noopener">Источник →</a></div>
+<div class="case"><span class="tag">Госзакупки</span><h3>Работа с госзакупками</h3><p>После выступления руководителя БСП-пром Премьер-министр поручил рассмотреть увеличение квоты госзакупок у малых и средних предприятий.</p><a href="https://www.xn----9sb8ahdbhe.xn--90ais/%D0%9F%D1%80%D0%B5%D0%BC%D1%8C%D0%B5%D1%80-%D0%BC%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D1%80-%D0%B2%D1%81%D1%82%D1%80%D0%B5%D1%82%D0%B8%D0%BB%D1%81%D1%8F-%D1%81-%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D1%8F%D0%BC%D0%B8-%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81-%D0%B0%D1%81%D1%81%D0%BE%D1%86%D0%B8%D0%B0%D1%86%D0%B8%D0%B9/" target="_blank" rel="noopener">Источник →</a></div>
+<div class="case"><span class="tag">2026 · Социальный диалог</span><h3>Участие в Национальном совете</h3><p>Председатель ассоциации Александр Федотович Калинин участвовал в заседании Национального совета по трудовым и социальным вопросам.</p><a href="https://www.xn----9sb8ahdbhe.xn--90ais/%D0%97%D0%B0%D1%81%D0%B5%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE-%D1%81%D0%BE%D0%B2%D0%B5%D1%82%D0%B0-%D0%BF%D0%BE-%D1%82%D1%80%D1%83%D0%B4%D0%BE%D0%B2%D1%8B%D0%BC-%D0%B8-%D1%81%D0%BE%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%BC-%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D0%B0%D0%BC/" target="_blank" rel="noopener">Источник →</a></div>
+<div class="case"><span class="tag">Международное сотрудничество</span><h3>Международные деловые контакты</h3><p>По приглашению ассоциации Беларусь посетила делегация предпринимателей Ирака.</p><a href="http://xn----9sb8ahdbhe.xn--90ais/%D0%94%D0%B5%D0%BB%D0%B5%D0%B3%D0%B0%D1%86%D0%B8%D1%8F-%D0%BF%D1%80%D0%B5%D0%B4%D0%BF%D1%80%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0%D1%82%D0%B5%D0%BB%D0%B5%D0%B9-%D0%98%D1%80%D0%B0%D0%BA%D0%B0-%D0%BF%D0%BE%D1%81%D0%B5%D1%82%D0%B8%D0%BB%D0%B0-%D0%91%D0%B5%D0%BB%D0%B0%D1%80%D1%83%D1%81%D1%8C/" target="_blank" rel="noopener">Источник →</a></div>
+</div></div></section>
+
+<section id="about"><div class="wrap about">
+<figure><img src="chairman.jpg" alt="Александр Федотович Калинин"><figcaption>Председатель — Александр Федотович Калинин</figcaption></figure>
+<div><h2>О союзе и доверии</h2>
+<p class="lead">БСП-пром — республиканская ассоциация бизнеса и нанимателей, объединяющая предпринимателей и руководителей предприятий. Ассоциация представляет законные интересы членов, оказывает правовую помощь и создаёт условия для развития бизнеса.</p>
+<ul class="checks"><li>Официальный партнёр Совета по развитию предпринимательства.</li><li>Зарегистрирована в Реестре объединений нанимателей.</li><li>Председатель — Александр Федотович Калинин.</li></ul>
+<a href="https://xn----9sb8ahdbhe.xn--90ais/%D0%A1%D0%BE%D0%B2%D0%B5%D1%82/" target="_blank" rel="noopener">Совет ассоциации на официальном сайте →</a></div>
+</div></section>
+
+<section id="join"><div class="wrap"><div class="formbox">
+<div><h2>Узнайте, что БСП-пром может дать вашему бизнесу</h2><p class="lead">Оставьте контакты — представитель ассоциации расскажет об условиях членства, доступных возможностях и порядке вступления.</p></div>
+<div><form id="f">
+<label>Имя и фамилия<input required name="name" autocomplete="name"></label>
+<label>Организация<input required name="org" autocomplete="organization"></label>
+<label>Телефон или email<input required name="contact"></label>
+<label>Отрасль<input required name="ind" placeholder="Например, машиностроение"></label>
+<label class="full">Вопрос или интересующее направление (необязательно)<textarea name="q" rows="3"></textarea></label>
+<label class="full cons"><input type="checkbox" required><span>Я даю согласие на обработку персональных данных в соответствии с <a href="#privacy">Политикой конфиденциальности</a> <span class="ph">ссылка-заглушка</span></span></label>
+<div class="full"><button class="btn" type="submit">Получить консультацию о членстве</button></div>
+</form>
+<div class="thanks" id="thanks"><h3 style="margin-top:0">Спасибо! Ваша заявка принята.</h3><p>Представитель ассоциации свяжется с вами.</p><p style="font-size:13px;opacity:.8">Прототип: данные никуда не отправляются.</p></div></div>
+</div></div></section>
+
+<footer id="contacts"><div class="wrap"><div class="ft">
+<div><img src="logo.png" alt="БСП-пром" style="height:56px;background:#fff;padding:6px;border-radius:8px;margin-bottom:14px"><strong style="color:#fff">Республиканская ассоциация бизнеса и нанимателей «БСП-пром»</strong><p>Официальный сайт: <a href="https://xn----9sb8ahdbhe.xn--90ais/" target="_blank" rel="noopener">бсп-пром.бел</a></p></div>
+<div><h4>Контакты</h4><p>220004, Республика Беларусь,<br>г. Минск, ул. Немига, 38, пом. 18</p><p>Тел.: <a href="tel:+375173220498">+375 17 322 04 98</a><br><a href="tel:+375173220353">+375 17 322 03 53</a></p><p>Email: <a href="mailto:belsp1991@mail.ru">belsp1991@mail.ru</a></p></div>
+<div><h4>Документы и соцсети</h4><p><a href="#privacy" id="privacy">Политика обработки персональных данных</a> <span class="ph">заглушка</span></p><p>Telegram, Viber и др. — <span class="ph">после создания и утверждения</span></p></div>
+</div><div class="copy">© 2026 Республиканская ассоциация бизнеса и нанимателей «БСП-пром». Прототип лендинга; реквизиты требуют подтверждения дирекцией.</div></div></footer>
+
+<script>
+const QA=[["Какая правовая помощь доступна членам?","Ассоциация помогает разобраться в новых требованиях, подготовить обращение и найти решение. Для разбора конкретной ситуации вопрос передаётся специалисту ассоциации."],
+["Как направить проблему в ассоциацию?","Опишите ситуацию в форме на этой странице или по контактам в подвале. Ассоциация может включить вопрос в позицию бизнеса для диалога с государственными органами."],
+["Какие меры поддержки доступны экспортёру?","Ассистент подскажет, где искать информацию о мерах поддержки, финансировании и документах для выхода на рынки. Перечень мер будет опираться на материалы с датой актуальности."],
+["Как работает вступление в БСП-пром?","Оставьте заявку — представитель ассоциации расскажет об условиях членства и порядке вступления."],
+["Как участвовать в рабочих группах?","Члены ассоциации могут участвовать в подготовке предложений по нормативным актам. Актуальный перечень рабочих групп уточните у представителя ассоциации."],
+["Какие документы нужны для обращения?","Как правило, требуется описание проблемы и подтверждающие материалы. Точный перечень зависит от вопроса — его уточнит специалист ассоциации."]];
+const log=document.getElementById('log'),qs=document.getElementById('qs');
+function add(t,c){const d=document.createElement('div');d.className='msg '+c;d.textContent=t;log.appendChild(d);log.scrollTop=log.scrollHeight}
+QA.forEach(([q,a])=>{const b=document.createElement('button');b.textContent=q;b.onclick=()=>{add(q,'me');setTimeout(()=>add('[Демо-ответ] '+a,'bot'),400)};qs.appendChild(b)});
+document.getElementById('f').onsubmit=e=>{e.preventDefault();e.target.style.display='none';document.getElementById('thanks').style.display='block'};
+document.querySelectorAll('nav a').forEach(a=>a.onclick=()=>document.getElementById('nav').classList.remove('open'));
+</script>
+</body></html>
